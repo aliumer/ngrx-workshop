@@ -8,13 +8,13 @@
     },
     {
       "id": "de5d6018-d9e5-4392-b951-2b3b181fce1c",
-      "name": "The Lion, the Witch and the Wardrobe",
+      "name": "Harry Potter",
       "earnings": "85000000",
       "description": "this is test book"
     },
     {
       "id": "9e103887-b318-4981-a3af-610634bcc5b3",
-      "name": "new book",
+      "name": "JavaScript The Good Parts",
       "earnings": "1000000",
       "description": "new book change another property"
     }

@@ -19,7 +19,8 @@ export class BooksPageComponent implements OnInit {
   currentBook$: Observable<BookModel | undefined>;
   total$: Observable<number>;
 
-  constructor(private booksService: BooksService, private store: Store) {
+  constructor(private booksService: BooksService, 
+              private store: Store<State>) {
     this.books$ = store.select(selectAllBooks);
     this.currentBook$  =store.select(selectActiveBook);
     this.total$ = store.select(selectBooksEarningsTotal);
