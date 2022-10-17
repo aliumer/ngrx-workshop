@@ -1,5 +1,7 @@
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
+import { timer } from "rxjs";
+import { mergeMap } from "rxjs/operators";
 import * as uuid from "uuid/v4";
 import { BookModel, BookRequiredProps } from "../models";
 
@@ -46,4 +48,11 @@ export class BooksService {
   delete(id: string) {
     return this.http.delete(`${BASE_URL}/${id}`);
   }
+
+  // delete(id: string) {
+  //   return timer(3000).pipe(
+  //     mergeMap(() => this.http.delete(`${BASE_URL}/${id}`))
+  //   )
+  // }
+
 }

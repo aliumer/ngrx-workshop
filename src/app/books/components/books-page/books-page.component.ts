@@ -5,9 +5,8 @@ import {
   BookModel,
   BookRequiredProps
 } from "src/app/shared/models";
-import { BooksService } from "src/app/shared/services";
 import { State, selectBooksEarningsTotal, selectAllBooks, selectActiveBook } from "src/app/shared/state";
-import { BooksPageActions, BooksApiActions }  from '../../actions'
+import { BooksPageActions }  from '../../actions'
 
 @Component({
   selector: "app-books",
@@ -16,11 +15,10 @@ import { BooksPageActions, BooksApiActions }  from '../../actions'
 })
 export class BooksPageComponent implements OnInit {
   books$: Observable<BookModel[]>;
-  currentBook$: Observable<BookModel | undefined>;
+  currentBook$: Observable<BookModel | null | undefined>;
   total$: Observable<number>;
 
-  constructor(private booksService: BooksService, 
-              private store: Store<State>) {
+  constructor(private store: Store<State>) {
     this.books$ = store.select(selectAllBooks);
     this.currentBook$  =store.select(selectActiveBook);
     this.total$ = store.select(selectBooksEarningsTotal);
@@ -53,25 +51,13 @@ export class BooksPageComponent implements OnInit {
 
   saveBook(bookProps: BookRequiredProps) {
     this.store.dispatch(BooksPageActions.createBook({book: bookProps}));
-    this.booksService.create(bookProps).subscribe((book) => {
-      this.store.dispatch(BooksApiActions.bookCreatedSuccessfully({book: book}));
-      this.removeSelectedBook();
-    });
   }
 
   updateBook(book: BookModel) {
     this.store.dispatch(BooksPageActions.updateBook({bookId: book.id, changes: book}));
-    this.booksService.update(book.id, book).subscribe((book) => {
-      this.store.dispatch(BooksApiActions.bookUpdatedSuccessfully({book}));
-      this.removeSelectedBook();
-    });
   }
 
   onDelete(book: BookModel) {
     this.store.dispatch(BooksPageActions.deleteBook({bookId: book.id}));
-    this.booksService.delete(book.id).subscribe(() => {
-      this.store.dispatch(BooksApiActions.bookDeletedSuccessfully({bookId: book.id}));
-      this.removeSelectedBook();
-    });
   }
 }
